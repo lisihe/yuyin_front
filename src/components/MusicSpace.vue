@@ -46,6 +46,10 @@
                 </template>
               </el-table-column>
             </el-table>
+            <el-pagination
+              layout="prev, pager, next"
+              :total="50">
+            </el-pagination>
           </div>
         </EasyScrollbar>
       </el-col>

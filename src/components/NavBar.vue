@@ -16,8 +16,8 @@
         </el-col>
         <el-col :span="9">
           <div id="searchBar">
-            <el-input :placeholder="searchPlaceHolder">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-input :placeholder="searchPlaceHolder" v-model="searchText">
+              <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
             </el-input>
           </div>
         </el-col>
@@ -36,14 +36,17 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-dialog ref="chatDialog" :visible.sync="chatDialogVisible" width="700px" height="500px" append-to-body center>
+    <el-dialog ref="chatDialog" title="音乐好友" style="padding: 0px" :visible.sync="chatDialogVisible" width="800px"  append-to-body center>
       <Chat :visible.sync="chatDialogVisible"/>
     </el-dialog>
     <el-dialog ref="loginDialog" :visible.sync="loginDialogVisible" width="350px" height="500px" append-to-body center>
       <Login :visible.sync="loginDialogVisible"/>
     </el-dialog>
-    <el-dialog ref="musicSpaceDialog" title="我的音乐空间" :visible.sync="musicSpaceDialogVisible" width="600px" height="500px!important" append-to-body center>
+    <el-dialog ref="musicSpaceDialog" title="我的音乐空间" :visible.sync="musicSpaceDialogVisible" width="600px" append-to-body center>
       <MusicSpace :visible.sync="musicSpaceDialogVisible"/>
+    </el-dialog>
+    <el-dialog ref="searchPageDialog" :title="'\''+ searchText + '\'  搜索结果'" :visible.sync="searchPageDialogVisible" width="800px"  append-to-body center>
+      <SearchPage :visible.sync="searchPageDialogVisible"/>
     </el-dialog>
   </el-row>
 </template>
@@ -51,6 +54,7 @@
 import Login from '@/components/login'
 import MusicSpace from '@/components/MusicSpace'
 import Chat from '@/components/Chat'
+import SearchPage from '@/components/searchPage/SearchPage'
 // 辅助函数，帮助生成计算属性
 import { mapState } from 'vuex'
 export default {
@@ -60,7 +64,9 @@ export default {
       searchPlaceHolder: '歌曲/歌手',
       loginDialogVisible: false,
       musicSpaceDialogVisible: false,
-      chatDialogVisible: false
+      chatDialogVisible: false,
+      searchPageDialogVisible: false,
+      searchText: ''
     }
   },
   computed: {
@@ -71,7 +77,13 @@ export default {
   components: {
     Login,
     MusicSpace,
-    Chat
+    Chat,
+    SearchPage
+  },
+  methods: {
+    doSearch () {
+      this.searchPageDialogVisible = true
+    }
   }
 }
 </script>
