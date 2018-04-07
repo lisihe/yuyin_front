@@ -21,27 +21,57 @@
             </el-input>
           </div>
         </el-col>
-        <el-col :span="4">
-          <div>预留</div>
+        <el-col :span="3">
+          <div @click="musicSpaceDialogVisible = true">音乐空间</div>
         </el-col>
-        <el-col :span="5">
-          <div id="profile">
+        <el-col :span="3">
+          <div @click="chatDialogVisible = true">我的好友</div>
+        </el-col>
+        <el-col :span="4">
+          <div id="profile" @click="loginDialogVisible = true">
             <div id="portrait">
             </div>
-            <div style="float: left; line-height: 80px; margin-left: 20px">未登录</div>
+            <div style="float: left; line-height: 80px; margin-left: 20px">{{loginState===0 ? '未登录' : '已登录'}}</div>
           </div>
         </el-col>
       </el-row>
     </el-col>
+    <el-dialog ref="chatDialog" :visible.sync="chatDialogVisible" width="700px" height="500px" append-to-body center>
+      <Chat :visible.sync="chatDialogVisible"/>
+    </el-dialog>
+    <el-dialog ref="loginDialog" :visible.sync="loginDialogVisible" width="350px" height="500px" append-to-body center>
+      <Login :visible.sync="loginDialogVisible"/>
+    </el-dialog>
+    <el-dialog ref="musicSpaceDialog" title="我的音乐空间" :visible.sync="musicSpaceDialogVisible" width="600px" height="500px!important" append-to-body center>
+      <MusicSpace :visible.sync="musicSpaceDialogVisible"/>
+    </el-dialog>
   </el-row>
 </template>
 <script>
+import Login from '@/components/login'
+import MusicSpace from '@/components/MusicSpace'
+import Chat from '@/components/Chat'
+// 辅助函数，帮助生成计算属性
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       title: '导航条',
-      searchPlaceHolder: '歌曲/歌手'
+      searchPlaceHolder: '歌曲/歌手',
+      loginDialogVisible: false,
+      musicSpaceDialogVisible: false,
+      chatDialogVisible: false
     }
+  },
+  computed: {
+    ...mapState([
+      'loginState'
+    ])
+  },
+  components: {
+    Login,
+    MusicSpace,
+    Chat
   }
 }
 </script>

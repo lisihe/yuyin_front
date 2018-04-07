@@ -1,27 +1,20 @@
 <template>
-  <el-container id="yuyin" style="">
+<div>
+  <el-container style="width: 100%; overflow:scoll">
     <el-header id="header">
       <NavBar/>
     </el-header>
     <el-main id="main" >
-      <el-container style="height:100%; width: 1200px; margin: 0px auto; overflow: hidden">
-        <el-aside style=" height:700px; marginTop: 20px; width: 250px; overflow: hidden; ">
-          <EasyScrollbar>
-            <div id="wrapper" style="height: 700px; width: 250px; ">
-              <Menu/>
-            </div>
-          </EasyScrollbar>
+      <el-container style=" height:100%;overflow: hidden">
+        <el-aside style=" height:100%;overflow: scoll">
+          <Menu/>
         </el-aside>
-        <el-main style="padding: 10px; width: 950">
-          <EasyScrollbar>
-            <div id="wrapper" style="height: 700px; margin: 10px">
-              <router-view/>
-            </div>
-          </EasyScrollbar>
+        <el-main style="padding: 10px">
+          <HomePage/>
         </el-main>
       </el-container>
     </el-main>
-    <el-footer id="footer" >
+    <el-footer id="footer">
       <PlayBar/>
     </el-footer>
     <el-dialog :visible.sync="lyricDialogVisible" width="60%" height="40%">
@@ -31,6 +24,8 @@
       <MusicList/>
     </el-dialog>
   </el-container>
+  <audio controls id="player" style="display: none"></audio>
+</div>
 </template>
 
 <script>
@@ -57,12 +52,19 @@ export default {
       currentImteFormat: '00:00',
       intervalCode: 0,
       lyricDialogVisible: false,
-      musicListDialogVisible: false
+      musicListDialogVisible: false,
+      musicList: [
+        {
+          name: '不得不爱',
+          src: 'http://localhost:8083/music/潘玮柏,弦子 - 不得不爱.mp3',
+          singer: '潘玮柏、弦子'
+        }, {
+          name: '不得不爱',
+          src: 'http://localhost:8083/music/潘玮柏,弦子 - 不得不爱.mp3',
+          singer: '潘玮柏、弦子'
+        }
+      ]
     }
-  },
-  created () {
-    // 默认进入主页
-    this.$router.push({name: 'homepage'})
   },
   components: {
     LyricsPage,
@@ -90,43 +92,28 @@ export default {
 </script>
 
 <style scoped>
-  #yuyin {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-  }
-
   /*顶部框*/
   #header {
-    position: absolute;
-    top: 0px;
+    position: fixed;
     left: 0px;
     right: 0px;
+    width: 100%;
     height: 80px!important;
     background-color: #FF6600;
     box-shadow:0px 0px 40px 20px #F87408 inset;
+    top: 0px;
   }
-  /*中间*/
-  #main {
-    position: absolute!important;
-    top: 80px;
-    right: 0px;
-    left: 0px;
-    bottom: 80px;
-    padding: 0px;
-  }
+
   /* 底部框*/
   #footer {
     background-color: #FF6600;
     box-shadow:0px 0px 40px 20px #F87408 inset;
-    position: absolute;
+    position: fixed;
     left: 0px;
     right: 0px;
     width: 100%;
-    bottom: 0px;
     height: 80px!important;
+    bottom: 0px;
   }
 
   /*中间的主要内容*/

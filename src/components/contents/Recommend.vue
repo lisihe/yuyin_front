@@ -1,27 +1,34 @@
 <template>
-  <div>
+  <div style="">
     <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <h3 style="background: #777; height: 100%">{{ item }}</h3>
+      <el-carousel-item >
+        <!-- <h3 style="background: #777; height: 100%">{{ item }}</h3>-->
+        <img style="width:100%; height: 100%;" src="../../assets/mubu/1.jpg"/>
+      </el-carousel-item>
+      <el-carousel-item >
+        <!-- <h3 style="background: #777; height: 100%">{{ item }}</h3>-->
+        <img style="width:100%; height: 100%;" src="../../assets/mubu/2.jpg"/>
+      </el-carousel-item>
+      <el-carousel-item >
+        <!-- <h3 style="background: #777; height: 100%">{{ item }}</h3>-->
+        <img style="width:100%; height: 100%;" src="../../assets/mubu/3.jpg"/>
       </el-carousel-item>
     </el-carousel>
-    <el-row>
-      <el-col :span="6">
-        <el-card :body-style="{ padding: '0px', height: '400px'}">
-          <img src="../../assets/musicImg/0003.jpg" class="image">
+    <div class="grid">
+      <div class="grid-item" v-for="id in 10" :key="id">
+        <el-card :body-style="{ padding: '0px', height: '250px'}" >
+          <img :src="require('../../assets/musicImg/' + id + '.jpg')" class="image">
           <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom clearfix">
-              <time class="time">{{ currentDate }}</time>
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
+            <span>专辑{{id}}</span>
           </div>
         </el-card>
-      </el-col>
-      <el-col :span="6"></el-col>
-      <el-col :span="6"></el-col>
-      <el-col :span="6"></el-col>
-    </el-row>
+      </div>
+    </div>
+    <el-pagination style="margin-top: 20px"
+      background
+      layout="prev, pager, next"
+      :total="1000">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -34,8 +41,20 @@ export default {
 }
 </script>
 <style>
+.grid {
+  display: flex;
+  flex-flow: wrap;
+  /*justify-content: space-between;*/
+}
+.grid-item {
+  flex: 0 0 200px;
+  margin-top: 13px;
+  margin-left: calc((100% - 800px) / 5);
+  cursor:pointer; /* 鼠标样式 */
+}
 .image {
-    height: 70%;
+    width: 100%;
+    max-height:200px;
     display: block;
 }
 .bottom {

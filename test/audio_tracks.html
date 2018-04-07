@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var player = document.createElement('Audio');
+    //player.autoplay = true
+    player.src = 'http://localhost:8083/music/2a.mp3'
+    console.log('播放器SRC： ' + player.src)
+    var audioTracks = player.audioTracks
+    console.log('audioTracks: ' + audioTracks)
+    player.addEventListener('abort', () => {
+      console.log('1_abort!!!')
+    })
+    player.addEventListener('canplay', () => {
+      console.log('2_canplay!!!')
+    })
+    player.addEventListener('canplaythrough', () => {
+      console.log('3_canplaythrough!!!')
+    })
+    player.addEventListener('durationchange', () => {
+      console.log('4_durationchange!!!')
+      console.log(player.duration)
+    })
+    player.addEventListener('emptied', () => {
+      console.log('5_emptied!!!')
+    })
+    player.addEventListener('ended', () => {
+      console.log('6_ended!!!')
+    })
+    player.addEventListener('error', () => {
+      console.log('7_error!!!')
+    })
+    player.addEventListener('loadeddata', () => {
+      console.log('8_loadeddata!!!')
+    })
+    player.addEventListener('loadedmetadata', () => {
+      console.log('9_loadedmetadata!!!')
+    })
+    player.addEventListener('loadstart', () => {
+      console.log('10_loadstart!!!')
+    })
+    player.addEventListener('pause', () => {
+      console.log('11_pause!!!')
+    })
+    player.addEventListener('play', () => {
+      console.log('12_play!!!')
+    })
+    player.addEventListener('playing', () => {
+      console.log('13_playing!!!')
+    })
+    player.addEventListener('progress', () => {
+      console.log('14_progress!!!')
+    })
+    player.addEventListener('ratechange', () => {
+      console.log('15_ratechange!!!')
+    })
+    player.addEventListener('seeked', () => {
+      console.log('16_seeked!!!')
+    })
+    player.addEventListener('seeking', () => {
+      console.log('17_seeking!!!')
+    })
+    player.addEventListener('stalled', () => {
+      console.log('18_stalled!!!')
+    })
+    player.addEventListener('suspend', () => {
+      console.log('19_suspend!!!')
+    })
+    player.addEventListener('timeupdate', (e) => {
+      console.log('20_timeupdate!!!' + e)
+    })
+    player.addEventListener('volumechange', () => {
+      console.log('21_volumechange!!!')
+    })
+    player.addEventListener('waiting', () => {
+      console.log('22_waiting!!!')
+    })
+  </script>
+</body>
+</html>

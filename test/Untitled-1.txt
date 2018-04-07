@@ -1,0 +1,43 @@
+player
+播放一首音乐的步骤
+初始化
+  从播放列表中获取一条歌曲信息JSON
+  {
+    url,
+    name,
+    author,
+    image,
+    duration
+  }
+  添加音频路径
+  player.src = 'url'
+  监听durationChange事件,获取音乐时长
+  设置音乐名称、音乐时长、音乐作者、音乐图片
+
+
+<ul id="menuBtn" style="list-style-type: none; line-height:30px; padding:0px; margin:0px; text-align:center">
+              <li style="margin: 5px; padding: 0px;" id="cycStyle" >1</li>
+              <li style="margin: 5px; padding: 0px;" id="musicList"  @click="musicListDialogVisible = true">2</li>
+            </ul>
+
+            <el-table
+      :data="musicList"
+      style="width: 100%"
+      height="600px"
+      size="small">
+        <el-table-column
+          prop="name"
+          label="日期"
+          width="200">
+        </el-table-column>
+        <el-table-column
+          prop="singer"
+          label="歌手"
+          width="120">
+        </el-table-column>
+        <el-table-column
+          prop="duration"
+          label="时长"
+          width="120">
+        </el-table-column>
+      </el-table>
