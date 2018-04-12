@@ -1,7 +1,7 @@
 <template>
   <div>
     <EasyScrollbar >
-      <div  id="wrapper" style="height: 500px">
+      <div  id="wrapper" style="height: 400px">
         <el-table
           :data="tableData"
           size="mini"

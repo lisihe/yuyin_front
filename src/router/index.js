@@ -15,7 +15,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: Home,
       children: [
@@ -54,9 +54,6 @@ export default new Router({
           component: Error
         }
       ]
-    }, {
-      path: '/',
-      component: Error
     }
   ]
 })

@@ -1,7 +1,7 @@
 <template>
   <div>
     <EasyScrollbar >
-      <div id="wrapper" style="height: 600px;">
+      <div id="wrapper" style="height: 400px;">
         <el-table
         :data="musicList"
         row-class-name="musiclist"

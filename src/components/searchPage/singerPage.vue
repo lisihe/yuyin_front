@@ -2,7 +2,7 @@
   <div>
     {{title}}
     <EasyScrollbar >
-      <div  id="wrapper" style="height: 500px">
+      <div  id="wrapper" style="height: 400px">
       </div>
     </EasyScrollbar>
   </div>

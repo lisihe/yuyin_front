@@ -122,6 +122,11 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    handlePreview () {
+      console.log('准备上传')
+    }
   }
 }
 </script>

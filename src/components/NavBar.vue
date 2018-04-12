@@ -22,21 +22,21 @@
           </div>
         </el-col>
         <el-col :span="3">
-          <div @click="musicSpaceDialogVisible = true">音乐空间</div>
+          <div @click="musicSpaceDialogVisible = true" style="cursor:pointer;">音乐空间</div>
         </el-col>
         <el-col :span="3">
-          <div @click="chatDialogVisible = true">我的好友</div>
+          <div @click="chatDialogVisible = true" style="cursor:pointer;">我的好友</div>
         </el-col>
         <el-col :span="4">
           <div id="profile" @click="loginDialogVisible = true">
             <div id="portrait">
             </div>
-            <div style="float: left; line-height: 80px; margin-left: 20px">{{loginState===0 ? '未登录' : '已登录'}}</div>
+            <div style="float: left; line-height: 80px; margin-left: 20px">{{loginState===0 ? '请登录' : username}}</div>
           </div>
         </el-col>
       </el-row>
     </el-col>
-    <el-dialog ref="chatDialog" title="音乐好友" style="padding: 0px" :visible.sync="chatDialogVisible" width="800px"  append-to-body center>
+    <el-dialog ref="chatDialog" title="音乐好友" style="padding: 0px" :visible.sync="chatDialogVisible" width="800px" top="30px"  append-to-body center>
       <Chat :visible.sync="chatDialogVisible"/>
     </el-dialog>
     <el-dialog ref="loginDialog" :visible.sync="loginDialogVisible" width="350px" height="500px" append-to-body center>
@@ -45,7 +45,7 @@
     <el-dialog ref="musicSpaceDialog" title="我的音乐空间" :visible.sync="musicSpaceDialogVisible" width="600px" append-to-body center>
       <MusicSpace :visible.sync="musicSpaceDialogVisible"/>
     </el-dialog>
-    <el-dialog ref="searchPageDialog" :title="'\''+ searchText + '\'  搜索结果'" :visible.sync="searchPageDialogVisible" width="800px"  append-to-body center>
+    <el-dialog ref="searchPageDialog" :title="'\''+ searchText + '\'  搜索结果'" :visible.sync="searchPageDialogVisible" width="800px" top="30px" append-to-body center>
       <SearchPage :visible.sync="searchPageDialogVisible"/>
     </el-dialog>
   </el-row>
@@ -71,7 +71,8 @@ export default {
   },
   computed: {
     ...mapState([
-      'loginState'
+      'loginState',
+      'username'
     ])
   },
   components: {

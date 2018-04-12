@@ -2,10 +2,7 @@ const baseUrl = 'http://yuyinmusic.s1.natapp.cc/music/'
 // 集中状态管理
 export default {
   state: {
-    baseMusicUrl: 'http://localhost:8083/music/vedio/',
-    baseLyricUrl: 'http://localhost:8083/music/lyric/',
-    baseImageUrl: 'http://localhost:8083/music/image/',
-    username: '',
+    baseMusicUrl = 'http://localhost:8084/music',
     loginState: 0, // 0 未登录，1 已登录
     count: 0,
     musicIndex: 4, // 当前音乐索引
@@ -95,15 +92,6 @@ export default {
     },
     changeBaseMusicUrl (state, playload) {
       state.baseMusicUrl = playload.baseMusicUrl
-    },
-    changeBaseLyricUrl (state, playload) {
-      state.baseLyricUrl = playload.baseLyricUrl
-    },
-    changeBaseImageUrl (state, playload) {
-      state.baseImageUrl = playload.baseImageUrl
-    },
-    changeUsername (state, playload) {
-      state.username = playload.username
     }
   }
 }

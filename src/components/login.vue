@@ -1,27 +1,46 @@
 <template>
   <div>
-    <span slot="title" style="fontSize: 25px; color: green">注册</span>
-    <el-form ref="loginForm" :model="loginForm" label-position="left" label-width="80px"  :rules="loginRule">
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="loginForm.username"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="loginForm.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="passwordCheck">
-        <el-input v-model="loginForm.passwordCheck" type="password"></el-input>
-      </el-form-item>
-      <el-form-item label="昵称" prop="nickname">
-        <el-input v-model="loginForm.nickname"></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="loginForm.email"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="close">取消</el-button>
-        <el-button @click="login">注册</el-button>
-      </el-form-item>
-    </el-form>
+    <div v-if="isSignIn">
+      <span slot="title" style="fontSize: 25px; color: green">注册</span>
+      <el-form ref="loginForm" :model="loginForm" label-position="left" label-width="80px"  :rules="loginRule">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="loginForm.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginForm.password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="确认密码" prop="passwordCheck">
+          <el-input v-model="loginForm.passwordCheck" type="password"></el-input>
+        </el-form-item>
+        <el-form-item label="昵称" prop="nickname">
+          <el-input v-model="loginForm.nickname"></el-input>
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="loginForm.email"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="close">取消</el-button>
+          <el-button @click="login">注册</el-button>
+        </el-form-item>
+        <span @click="changeToLogin" style="cursor: pointer; color: gray">直接登录</span>
+      </el-form>
+    </div>
+    <div v-else>
+      <span slot="title" style="fontSize: 25px; color: green">登录</span>
+      <el-form ref="loginForm" :model="loginForm" label-position="left" label-width="80px"  :rules="loginRule">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="loginForm.username"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginForm.password" type="password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button @click="close">取消</el-button>
+          <el-button @click="submit">登录</el-button>
+        </el-form-item>
+        <span @click="changeToSignin" style="cursor: pointer; color: gray">新用户注册</span>
+      </el-form>
+    </div>
   </div>
 </template>
 <script>
@@ -31,6 +50,7 @@ export default {
   data () {
     return {
       title: '登录',
+      isSignIn: false,
       loginForm: {
         username: '',
         password: '',
@@ -91,6 +111,42 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    submit () {
+      this.$axios.post('/login/submit', this.loginForm)
+        .then(value => {
+          if (value.data !== 'error') {
+            // 发送提示信息
+            this.$message({
+              message: '登录成功',
+              type: 'success'
+            })
+            // 注册成功后的操作：1.关闭注册窗口 2.更改登录状态
+            this.close()
+            this.$store.commit({
+              type: 'changeLoginState',
+              loginState: 1
+            })
+            this.$store.commit({
+              type: 'changeUsername',
+              username: value.data
+            })
+            console.log('loginsate:' + this.loginState)
+          } else {
+            // 发送提示信息
+            this.$message.error('抱歉，注册失败!')
+          }
+          console.log(value.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    changeToLogin () {
+      this.isSignIn = false
+    },
+    changeToSignin () {
+      this.isSignIn = true
     },
     close () {
       console.log('关闭窗口')

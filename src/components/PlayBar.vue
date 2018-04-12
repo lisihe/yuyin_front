@@ -33,7 +33,7 @@
           <el-col :span="19">
             <el-row type="flex" align="middle" justify="center" >
               <el-col :span="7">
-                <div id="musicImage" :style="{backgroundImage: `url(${urlEncode(musicInfo.image)})`}" @click="musicListDialogVisible = true"></div>
+                <div id="musicImage" :style="{backgroundImage: `url(${urlEncode(baseImageUrl + musicInfo.musicImage + '.jpg')})`}" @click="lyricsPageDialogVisible = true"></div>
               </el-col>
               <el-col :span="15">
                 <div style="width: 240px; height: 80px">
@@ -58,10 +58,14 @@
     <el-dialog ref="musicListDialog" title="播放列表" :visible.sync="musicListDialogVisible" width="500px"  append-to-body center :modal="false">
       <MusicList :visible.sync="musicListDialogVisible"/>
     </el-dialog>
+    <el-dialog ref="lyricsPageDialog" :title="musicInfo.name + ' - ' + musicInfo.singer" :visible.sync="lyricsPageDialogVisible" width="900px"  append-to-body center :modal="false">
+      <LyricsPage :visible.sync="lyricsPageDialogVisible" :currentTime="playerCurrentTime" :songImge="this.musicInfo.image"/>
+    </el-dialog>
   </div>
 </template>
 <script>
 import MusicList from '@/components/MusicList'
+import LyricsPage from '@/components/LyricsPage'
 // 辅助函数，帮助生成计算属性
 import { mapState } from 'vuex'
 
@@ -83,11 +87,13 @@ export default {
       musicListDialogVisible: false,
       historyIndexStack: [],
       musicImageStyle: {
-      }
+      },
+      lyricsPageDialogVisible: false
     }
   },
   components: {
-    MusicList
+    MusicList,
+    LyricsPage
   },
   computed: {
     musicInfo () {
@@ -117,7 +123,10 @@ export default {
     ...mapState([
       'loginState',
       'musicList',
-      'musicIndex'
+      'musicIndex',
+      'baseMusicUrl',
+      'baseImageUrl',
+      'baseLyricUrl'
     ])
   },
   watch: {
@@ -130,6 +139,22 @@ export default {
     }
   },
   created () {
+    // 请求播放列表
+    this.$axios.post('/music/select', 1)
+      .then(value => {
+        if (value.data) {
+          this.$store.commit({
+            type: 'changeMusicList',
+            musicList: value.data
+          })
+          console.log(value.data)
+        } else {
+          this.$message.error('抱歉!')
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
     this.player = document.createElement('audio')
     // 设置音量
     this.player.volume = this.volume / 100
@@ -176,9 +201,9 @@ export default {
       this.isPlay = !this.isPlay
       // 如果是播放、则播放当前音乐
       // 检查播放器状态
-      if (this.player.src === '' || this.urlEncode(this.musicInfo.src) !== this.player.src) {
-        console.log('重新设置源')
-        this.player.src = this.musicInfo.src
+      if (this.player.src === '' || this.urlEncode(this.baseMusicUrl + this.musicInfo.url + '.mp3') !== this.player.src) {
+        console.log('重新设置源' + this.baseMusicUrl + this.musicInfo.url + '.mp3')
+        this.player.src = this.baseMusicUrl + this.musicInfo.url + '.mp3'
       }
       if (this.isPlay) {
         this.player.play()
